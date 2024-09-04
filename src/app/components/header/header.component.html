@@ -1,0 +1,160 @@
+<header class="continer-fluid">
+  <div class="header-top">
+    <div class="container">
+      <div class="row col-det">
+        <div class="col-lg-6 d-none d-lg-block">
+          <ul class="ulleft">
+            <li>
+              <i class="fas fa-phone-volume"></i>
+              +994704916566
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-6 folouws">
+          <ul class="ulright">
+            <li><small>Bizi izləyin </small>:</li>
+            <li>
+              <img
+                width="24"
+                height="24"
+                src="https://img.icons8.com/fluency/48/facebook.png"
+                alt="facebook"
+              />
+            </li>
+            <li>
+              <img
+                width="24"
+                height="24"
+                src="https://img.icons8.com/ios/50/twitterx--v1.png"
+                alt="twitterx--v1"
+              />
+            </li>
+            <li>
+              <img
+                width="27"
+                height="27"
+                src="https://img.icons8.com/fluency/48/instagram-new.png"
+                alt="instagram-new"
+              />
+            </li>
+            <li>
+              <img
+                width="27"
+                height="27"
+                src="https://img.icons8.com/fluency/48/linkedin.png"
+                alt="linkedin"
+              />
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-6 col-12 btn-bhed">
+          <button
+            class="btn btn-sm btn-success"
+            (click)="openModal()"
+            id="join-us-button"
+          >
+            Bizə qoşul
+          </button>
+          <div class="modal" [ngClass]="{ show: showModal }">
+            <div class="modal-content">
+              <span class="close" (click)="closeModal()">&times;</span>
+              <div class="logo-container">
+                <img src="/assets/images/logo2.png" alt="Site Logo" />
+              </div>
+              <a class="a-modal" href="/volunteer">
+                <button class="modal-button" id="volunteerButton">
+                  Könüllü Ol
+                </button>
+              </a>
+
+              <button class="modal-button" id="helpButton">Yardım et</button>
+            </div>
+          </div>
+          <button
+            class="btn btn-sm btn-default"
+            id="openFormBtn"
+            (click)="openForm()"
+          >
+            Yardım al
+          </button>
+          <div class="form-popup" [ngClass]="{ open: showForm }">
+            <div class="form-container">
+              <span (click)="closeForm()" class="close-btn">&times;</span>
+              <h2>Yardım Al</h2>
+              <form action="#">
+                <label for="name">Ad, Soyad, Ata adı *</label>
+                <input type="text" id="name" name="name" required />
+
+                <label for="phone">Əlaqə nömrəsi *</label>
+                <input
+                  type="text"
+                  id="phone"
+                  name="phone"
+                  (keypress)="validateNumber($event)"
+                  required
+                  placeholder="(+994) 70-491-65-66"
+                  mask="(000) 00-000-00-00"
+                />
+                <label for="region">Region</label>
+                <select id="region" name="region">
+                  <option
+                    *ngFor="let region of regions"
+                    [value]="region.toLowerCase()"
+                  >
+                    {{ region }}
+                  </option>
+                </select>
+
+                <label for="city">Ünvan</label>
+                <input type="text" id="city" name="city" />
+
+                <label for="info">Qısa məlumat</label>
+                <textarea id="info" name="info"></textarea>
+
+                <button type="submit">GÖNDƏR</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="menu-jk" class="header-bottom">
+    <div class="container">
+      <div class="row nav-row">
+        <div class="col-lg-3 col-md-12 logo">
+          <a routerLink="/home">
+            <img src="assets/images/logo2.png" style="height: 65px" />
+            <a data-toggle="collapse" data-target="#menu" href="#menu"
+              ><i class="fas d-block d-lg-none small-menu fa-bars"></i
+            ></a>
+          </a>
+        </div>
+        <div id="menu" class="col-lg-9 col-md-12 d-none d-lg-block nav-col">
+          <ul class="navbad">
+            <li class="nav-item active">
+              <a class="nav-link" href="/home">Ana Səhifə </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/about-us" href="">Haqqımızda</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/services">Lahiyələrimiz</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/gallery">Qalereya</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/blog">Blog</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/contact-us">Əlaqə</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

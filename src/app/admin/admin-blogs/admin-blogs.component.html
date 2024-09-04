@@ -1,0 +1,119 @@
+<div class="admin-blogs-container">
+  <h2>Bloqlar</h2>
+  <button class="add-blog-btn" (click)="toggleForm()">Əlavə Et</button>
+
+  <!-- Blog List -->
+  <div
+    class="blog-list"
+    id="paginated-blogs"
+    *ngIf="!showForm"
+    [ngClass]="{ hidden: isPageChanging }"
+  >
+    <div *ngFor="let blog of paginatedBlogs; let i = index" class="blog-card">
+      <img
+        [src]="blog.imageUrl || 'assets/images/default-placeholder.png'"
+        alt="Blog Image"
+        class="blog-image"
+      />
+      <h4>{{ blog.title }}</h4>
+      <div [innerHTML]="getShortContent(blog.description, i)"></div>
+      <button
+        *ngIf="blog.description.length > 100"
+        (click)="toggleContent(i)"
+        class="toggle-btn"
+      >
+        {{ isExpanded[i] ? "Daha az" : "Daha çox" }}
+      </button>
+      <button (click)="editBlog(blog)">Redaktə et</button>
+      <button (click)="deleteBlog(blog.id)">Sil</button>
+    </div>
+  </div>
+
+  <!-- Add/Edit Blog Form -->
+  <div class="blog-form-container" *ngIf="showForm">
+    <h2>{{ currentBlogId ? "Blog Redaktə Et" : "Yeni Blog Əlavə Et" }}</h2>
+    <form [formGroup]="blogForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="title">Başlıq</label>
+        <input id="title" formControlName="title" />
+        <div
+          *ngIf="
+            blogForm.get('title')?.invalid && blogForm.get('title')?.touched
+          "
+          class="error-message"
+        >
+          <small *ngIf="blogForm.get('title')?.errors?.['required']"
+            >Başlıq vacibdir.</small
+          >
+          <small *ngIf="blogForm.get('title')?.errors?.['maxlength']"
+            >Başlıq çox uzundur.</small
+          >
+        </div>
+      </div>
+
+      <div>
+        <label for="image">Şəkil</label>
+        <input
+          type="file"
+          id="image"
+          (change)="onFileSelect($event)"
+          accept=".jpg,.jpeg,.png"
+        />
+        <div
+          *ngIf="blogForm.get('imageUrl')?.hasError('invalidFileType')"
+          class="error"
+        >
+          Yalnız şəkil faylları qəbul olunur (JPEG, PNG, GIF, BMP).
+        </div>
+        <div
+          *ngIf="blogForm.get('imageUrl')?.hasError('fileTooLarge')"
+          class="error"
+        >
+          Fayl ölçüsü maksimum 2 MB ola bilər.
+        </div>
+      </div>
+
+      <div>
+        <label for="description">Məzmun</label>
+        <textarea
+          formControlName="description"
+          id="description"
+          placeholder="Blog məzmununu yazın"
+        ></textarea>
+        <div
+          *ngIf="
+            blogForm.get('description')?.invalid &&
+            blogForm.get('description')?.touched
+          "
+          class="error-message"
+        >
+          <small *ngIf="blogForm.get('description')?.errors?.['required']"
+            >Məzmun vacibdir.</small
+          >
+        </div>
+      </div>
+
+      <button type="submit">
+        {{ currentBlogId ? "Redaktə Et" : "Əlavə Et" }}
+      </button>
+      <button type="button" (click)="toggleForm()">İmtina Et</button>
+    </form>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div class="confirmation-modal" *ngIf="showConfirmation">
+    <div class="modal-contentt">
+      <p>{{ confirmationMessage }}</p>
+      <button class="confirm-btn" (click)="onConfirm(true)">Bəli</button>
+      <button class="cancel-btn" (click)="onConfirm(false)">Xeyr</button>
+    </div>
+  </div>
+
+  <div class="pagination-controls" *ngIf="!showForm">
+    <button (click)="prevPage()" [disabled]="currentPage === 1">Əvvəlki</button>
+    <span>Səhifə {{ currentPage }} / {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+      Növbəti
+    </button>
+  </div>
+</div>

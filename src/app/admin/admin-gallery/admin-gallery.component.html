@@ -1,0 +1,30 @@
+<div class="gallery-container">
+  <h2>Qalereya Şəkilləri</h2>
+
+  <form [formGroup]="galleryForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="image">Şəkil Yüklə:</label>
+      <input type="file" id="image" (change)="onFileSelected($event)" formControlName="image" accept=".jpg,.jpeg,.png" />
+      <div *ngIf="imageError" class="error-message">{{ imageError }}</div>
+      <div *ngIf="galleryForm.get('image')?.hasError('required') && galleryForm.get('image')?.touched" class="error-message">
+        Şəkil əlavə edin.
+      </div>
+    </div>
+
+    <div *ngIf="previewUrl">
+      <h3>Önizləmə:</h3>
+      <img [src]="previewUrl" alt="Selected Image" width="200">
+    </div>
+
+    <button type="submit" [disabled]="galleryForm.invalid">Şəkil Yüklə</button>
+  </form>
+
+  <hr />
+
+  <h2>Mövcud Şəkillər</h2>
+  <div class="gallery-grid">
+    <div *ngFor="let image of galleryImages">
+      <img [src]="image" alt="Gallery Image" width="150" />
+    </div>
+  </div>
+</div>

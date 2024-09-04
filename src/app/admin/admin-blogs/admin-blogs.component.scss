@@ -1,0 +1,319 @@
+.admin-blogs-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  h2 {
+    text-align: center;
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .add-blog-btn {
+    display: block;
+    margin: 20px auto;
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #218838;
+    }
+  }
+
+  .blog-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    .blog-card {
+      width: calc(33.333% - 20px); /* 3 kart bir sırada */
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: translateY(-5px); /* Hover zamanı kartın yuxarı qalxması */
+      }
+
+      .blog-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 5px;
+        margin-bottom: 15px;
+      }
+
+      h4 {
+        color: #007bff;
+        margin-bottom: 10px;
+      }
+
+      p {
+        color: #555;
+        margin-bottom: 10px;
+      }
+
+      button {
+        padding: 10px 15px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        margin-top: 10px;
+
+        &:first-of-type {
+          background-color: #007bff;
+          color: white;
+          margin-right: 10px;
+
+          &:hover {
+            background-color: #0056b3;
+          }
+        }
+
+        &:last-of-type {
+          background-color: #dc3545;
+          color: white;
+
+          &:hover {
+            background-color: #c82333;
+          }
+        }
+      }
+    }
+  }
+
+  .blog-form-container {
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+
+    textarea {
+      width: 100%;
+      height: 200px; /* Daha böyük genişlik */
+      font-family: inherit;
+      font-size: 16px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ced4da;
+      box-sizing: border-box;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+
+      label {
+        margin: 10px 0 5px;
+        color: #333;
+      }
+
+      input,
+      textarea {
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border: 1px solid #ced4da;
+        font-size: 14px;
+      }
+
+      button {
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        margin-top: 10px;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+
+        &:first-of-type {
+          background-color: #28a745;
+          color: white;
+
+          &:hover {
+            background-color: #218838;
+          }
+        }
+
+        &:last-of-type {
+          background-color: #6c757d;
+          color: white;
+
+          &:hover {
+            background-color: #5a6268;
+          }
+        }
+      }
+
+      .error-message {
+        color: red;
+        font-size: 12px;
+        margin-top: -10px;
+        margin-bottom: 10px;
+      }
+
+      .preview-image {
+        width: 100%;
+        max-height: 300px;
+        object-fit: cover;
+        border-radius: 5px;
+        margin-bottom: 15px;
+      }
+    }
+  }
+
+  .confirmation-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.4s ease-out forwards;
+  }
+
+  .modal-contentt {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    transform: scale(0.7);
+    opacity: 0;
+    animation: slideDown 0.5s ease-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      background: rgba(0, 0, 0, 0);
+    }
+    to {
+      background: rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  @keyframes slideDown {
+    0% {
+      transform: scale(0.7);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .confirm-btn,
+  .cancel-btn {
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+
+    &.confirm-btn {
+      background-color: #28a745;
+      color: white;
+    }
+
+    &.cancel-btn {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    &:hover {
+      transform: translateY(-3px);
+    }
+  }
+
+  .pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+
+    button {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      margin: 0 5px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:disabled {
+        background-color: #ddd;
+        cursor: not-allowed;
+      }
+
+      &:hover:not(:disabled) {
+        background-color: #0056b3;
+      }
+    }
+
+    span {
+      margin: 0 10px;
+      font-size: 14px;
+      color: #333;
+    }
+  }
+
+  #paginated-blogs {
+    transition: opacity 0.3s ease-in-out;
+    opacity: 1;
+
+    &.hidden {
+      opacity: 0;
+    }
+  }
+}
+
+.toggle-btn {
+  padding: 8px 16px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: inline-block;
+  margin-top: 10px;
+
+  &:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    background-color: #003f7f;
+    transform: translateY(0);
+  }
+}
+button + button {
+  margin-left: 10px; /* Düymələr arasında 10px boşluq */
+}

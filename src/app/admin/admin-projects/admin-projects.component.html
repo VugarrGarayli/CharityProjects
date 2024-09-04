@@ -1,0 +1,116 @@
+<div class="projects-container">
+  <div class="header">
+    <h2>Lahiyələrimiz</h2>
+    <button class="add-btn" (click)="openAddForm()">Əlavə Et</button>
+  </div>
+
+  <div class="project-list">
+    <h3>Əlavə olunan lahiyələr:</h3>
+    <div
+      class="project-card"
+      *ngFor="let proj of paginatedProjects; let i = index"
+    >
+      <img [src]="proj.image" alt="Project Image" class="project-image" />
+      <div class="project-info">
+        <h4>{{ proj.title }}</h4>
+        <div [innerHTML]="getShortContent(proj.content, i)"></div>
+        <div class="more-less-btn-container">
+          <button *ngIf="proj.content.length > 100" (click)="toggleContent(i)" class="more-less-btn">
+            {{ isExpanded[i] ? 'Daha az' : 'Daha çox' }}
+          </button>
+        </div>
+        <button class="edit-btn" (click)="openEditForm(i)">Redaktə Et</button>
+        <button class="delete-btn" (click)="deleteProject(i)">Sil</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="pagination">
+    <button (click)="previousPage()" [disabled]="page === 1">Əvvəlki</button>
+    <button
+      (click)="nextPage()"
+      [disabled]="paginatedProjects.length < pageSize"
+    >
+      Sonrakı
+    </button>
+  </div>
+
+  <div class="project-form-popup" *ngIf="showForm">
+    <div class="popup-content">
+      <h3>
+        {{
+          editingIndex !== null ? "Lahiyəni Redaktə Et" : "Yeni Lahiyə Əlavə Et"
+        }}
+      </h3>
+      <div class="project-form">
+        <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="title">Başlıq:</label>
+            <input id="title" type="text" formControlName="title" />
+            <div *ngIf="projectForm.get('title')?.errors">
+              <small *ngIf="projectForm.get('title')?.errors?.['required']"
+                >Başlıq vacibdir.</small
+              >
+              <small *ngIf="projectForm.get('title')?.errors?.['pattern']"
+                >Yalnız hərflərdən istifadə edin.</small
+              >
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="image">Şəkil:</label>
+            <input
+              id="image"
+              type="file"
+              (change)="onFileChange($event)"
+              formControlName="image"
+              accept=".jpg,.jpeg,.png"
+            />
+            <div *ngIf="projectForm.get('image')?.errors">
+              <small>Şəkil faylı seçilməlidir.</small>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="content">Məzmun:</label>
+            <textarea
+              id="content"
+              formControlName="content"
+              rows="10"
+            ></textarea>
+            <div *ngIf="projectForm.get('content')?.['required']">
+              <small>Məzmun vacibdir.</small>
+            </div>
+          </div>
+
+          <button
+            class="submit-btn"
+            type="submit"
+            [disabled]="projectForm.invalid"
+          >
+            Əlavə et
+          </button>
+          <button class="cancel-btn" type="button" (click)="onCancel()">
+            İmtina et
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="showConfirmation" class="custom-modal">
+    <div class="modal-contentt">
+      <h3>{{ confirmationMessage }}</h3>
+      <div class="button-group">
+        <button (click)="confirmAction(true)" class="confirm-btn">Bəli</button>
+        <button (click)="confirmAction(false)" class="cancel-btn">Xeyr</button>
+      </div>
+    </div>
+  </div>
+  
+  
+
+</div>
+
+
+

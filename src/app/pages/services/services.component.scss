@@ -1,0 +1,107 @@
+/* Styling for the event list page */
+html {
+  scroll-behavior: smooth;
+}
+.event-container {
+  padding: 50px 0;
+}
+.event-box {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-bottom: 20px;
+  text-align: center;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.event-box:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Set a fixed height for images */
+.event-box img {
+  max-width: 100%;
+  height: 150px; /* Set a fixed height for images */
+  object-fit: cover; /* Ensure the image covers the entire area without distortion */
+  margin-bottom: 15px;
+}
+
+/* Constrain the height of the description */
+.event-box .desic {
+  font-size: 13px;
+  margin-bottom: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Add ellipsis if text overflows */
+  height: 60px; /* Set a fixed height for the description text */
+}
+
+/* Ensure the button is always at the bottom of the box */
+.event-box .btn {
+  margin-top: auto;
+}
+
+.raised {
+  font-weight: bold;
+}
+
+/* Styling for the event details page */
+.project-details {
+  background-color: #f8f9fa;
+  padding: 50px 20px;
+  text-align: center;
+}
+.project-details.ng-star-inserted {
+  opacity: 1;
+}
+.event-title {
+  font-size: 36px;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.event-image {
+  width: 100%;
+  max-width: 700px;
+  height: auto;
+  margin: 20px auto;
+}
+
+
+.event-description {
+  padding: 0 20px;
+  text-align: justify;
+  margin-top: 20px;
+}
+
+.btn-success {
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-success:hover {
+  background-color: #28a745;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #000;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  animation: spin 1s linear infinite;
+  margin: auto;
+  display: block;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,39 @@
+<!-- Page Title -->
+<div class="page-nav no-margin row">
+  <div class="container">
+    <div class="row">
+      <h2>Lahiyələrimiz</h2>
+      <ul>
+        <li>
+          <a href="#"><i class="fas fa-home"></i> Ana Səhifə</a>
+        </li>
+        <li><i class="fas fa-angle-double-right"></i> Lahiyələrimiz</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="container" *ngIf="!selectedEvent">
+  <div class="row event-container">
+    <div class="col-md-4 col-sm-6" *ngFor="let event of events">
+      <div class="event-box">
+        <img [src]="event.image" alt="{{ event.title }}" />
+        <h4>{{ event.title }}</h4>
+        <p class="raises">
+          <span>Raised : ${{ event.raised }}</span> / ${{ event.goal }}
+        </p>
+        <p class="desic">{{ event.description | slice: 0:100 }}...</p>
+        <button class="btn btn-success btn-sm" (click)="selectEvent(event)">
+          Read More
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Project Details Page -->
+<div *ngIf="selectedEvent" class="container project-details">
+  <h2 class="event-title">{{ selectedEvent.title }}</h2>
+  <img [src]="selectedEvent.image" alt="{{ selectedEvent.title }}" class="img-fluid event-image" />
+  <p class="event-description">{{ selectedEvent.description }}</p>
+</div>

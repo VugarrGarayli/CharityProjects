@@ -1,0 +1,104 @@
+.our-blog {
+  background-color: #fdfdfd;
+  padding: 40px;
+
+  @media screen and (max-width: 967px) {
+    padding: 30px 0px;
+  }
+
+  .single-blog {
+    margin-bottom: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 6px 0 rgba(218, 218, 253, 0.65),
+      0 2px 6px 0 rgba(206, 206, 238, 0.54);
+  }
+
+  figure {
+    margin-bottom: 5px;
+  }
+
+  .blog-detail {
+    padding: 15px;
+  }
+
+  small {
+    color: #71b61b;
+    font-size: 12px;
+  }
+
+  h4 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+
+  p {
+    text-align: justify;
+    text-indent: 20px;
+  }
+
+  .link {
+    display: flex;
+    align-items: center;
+
+    a {
+      font-size: 12px;
+      color: #71b61b;
+    }
+
+    i {
+      padding-top: 6px;
+      margin-left: 5px;
+      color: #ffffff;
+    }
+  }
+}
+
+.blog-details {
+  padding: 20px; /* Ümumi padding */
+
+  .blog-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center; /* Başlığı ortala */
+  }
+
+  .blog-image {
+    width: 100%;
+    max-width: 600px; /* Şəkilin maksimum genişliyini müəyyən edin */
+    margin: 20px auto; /* Şəkili ortala */
+    display: block;
+    border-radius: 10px; /* Şəkilə dairəvi kənarlar əlavə et */
+  }
+
+  .blog-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+    margin: 0 auto; /* Mətni ortala */
+    max-width: 800px; /* Mətni 800px-ə qədər məhdudlaşdır */
+    padding: 0 20px; /* Mətnin sağdan və soldan məsafəsini tənzimlə */
+    text-align: justify; /* Mətnin sağ və sol hizalanmasını təmin et */
+  }
+}
+
+.btn {
+  &.btn-success {
+    background-color: #28a745;
+    border: none;
+
+    &:hover {
+      background-color: #218838;
+    }
+  }
+
+  &.btn-secondary {
+    background-color: #6c757d;
+    border: none;
+
+    &:hover {
+      background-color: #5a6268;
+    }
+  }
+}

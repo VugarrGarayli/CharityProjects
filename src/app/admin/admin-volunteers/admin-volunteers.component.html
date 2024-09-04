@@ -1,0 +1,229 @@
+<div class="admin-volunteer-container">
+  <h2>Könüllü Qeydiyyatları</h2>
+  <button class="add-volunteer-btn" (click)="toggleForm()">Əlavə Et</button>
+
+  <!-- Volunteer List -->
+  <div
+    class="volunteer-list"
+    id="paginated-volunteers"
+    *ngIf="!showForm"
+    [ngClass]="{ hidden: isPageChanging }"
+  >
+    <div *ngFor="let volunteer of paginatedVolunteers" class="volunteer-card">
+      <img
+        [src]="volunteer.imageUrl || 'assets/images/default-placeholder.png'"
+        alt="Volunteer Image"
+        class="volunteer-image"
+      />
+      <h4>{{ volunteer.name }} {{ volunteer.surname }}</h4>
+      <p>Mobil: {{ volunteer.mobile }}</p>
+      <p>Email: {{ volunteer.email }}</p>
+      <p>Ata Adı: {{ volunteer.fathersName }}</p>
+      <p>Doğum Tarixi: {{ volunteer.birthDate }}</p>
+      <p>Faktiki Yaşayış: {{ volunteer.address }}</p>
+      <button (click)="editVolunteer(volunteer)">Redaktə et</button>
+      <button (click)="deleteVolunteer(volunteer.id)">Sil</button>
+    </div>
+  </div>
+
+  <!-- Add/Edit Form -->
+  <div class="volunteer-form-container" *ngIf="showForm">
+    <h2>
+      {{
+        currentVolunteerId ? "Könüllünü Redaktə Et" : "Yeni Könüllü Əlavə Et"
+      }}
+    </h2>
+    <form [formGroup]="volunteerForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="name">Ad</label>
+        <input id="name" formControlName="name" />
+        <div
+          *ngIf="
+            volunteerForm.get('name')?.hasError('required') &&
+            volunteerForm.get('name')?.touched
+          "
+          class="error"
+        >
+          Ad tələb olunur.
+        </div>
+        <div
+          *ngIf="
+            volunteerForm.get('name')?.hasError('maxlength') &&
+            volunteerForm.get('name')?.touched
+          "
+          class="error"
+        >
+          Ad ən çox 15 simvol olmalıdır.
+        </div>
+      </div>
+
+      <div>
+        <label for="surname">Soyad</label>
+        <input id="surname" formControlName="surname" />
+        <div
+          *ngIf="
+            volunteerForm.get('surname')?.hasError('required') &&
+            volunteerForm.get('surname')?.touched
+          "
+          class="error"
+        >
+          Soyad tələb olunur.
+        </div>
+        <div
+          *ngIf="
+            volunteerForm.get('surname')?.hasError('maxlength') &&
+            volunteerForm.get('surname')?.touched
+          "
+          class="error"
+        >
+          Soyad ən çox 15 simvol olmalıdır.
+        </div>
+      </div>
+
+      <div>
+        <label for="fathersName">Ata adı</label>
+        <input id="fathersName" formControlName="fathersName" />
+        <div
+          *ngIf="
+            volunteerForm.get('fathersName')?.hasError('required') &&
+            volunteerForm.get('fathersName')?.touched
+          "
+          class="error"
+        >
+          Ata adı tələb olunur.
+        </div>
+        <div
+          *ngIf="
+            volunteerForm.get('fathersName')?.hasError('maxlength') &&
+            volunteerForm.get('fathersName')?.touched
+          "
+          class="error"
+        >
+          Ata adı ən çox 15 simvol olmalıdır.
+        </div>
+      </div>
+
+      <div>
+        <label for="birthDate">Doğum tarixi</label>
+        <input
+          type="date"
+          id="birthDate"
+          formControlName="birthDate"
+          max="{{ currentYear }}-12-31"
+        />
+        <div
+          *ngIf="
+            volunteerForm.get('birthDate')?.hasError('required') &&
+            volunteerForm.get('birthDate')?.touched
+          "
+          class="error"
+        >
+          Doğum tarixi tələb olunur.
+        </div>
+      </div>
+
+      <div>
+        <label for="mobile">Mobil nömrə</label>
+        <input id="mobile" formControlName="mobile" />
+        <div
+          *ngIf="
+            volunteerForm.get('mobile')?.hasError('required') &&
+            volunteerForm.get('mobile')?.touched
+          "
+          class="error"
+        >
+          Mobil nömrə tələb olunur.
+        </div>
+        <div
+          *ngIf="
+            volunteerForm.get('mobile')?.hasError('pattern') &&
+            volunteerForm.get('mobile')?.touched
+          "
+          class="error"
+        >
+          Nömrə formata uyğun olmalıdır: XX XXX XX XX.
+        </div>
+      </div>
+
+      <div>
+        <label for="email">Email</label>
+        <input id="email" formControlName="email" />
+        <div
+          *ngIf="
+            volunteerForm.get('email')?.hasError('required') &&
+            volunteerForm.get('email')?.touched
+          "
+          class="error"
+        >
+          Email tələb olunur.
+        </div>
+        <div
+          *ngIf="
+            volunteerForm.get('email')?.hasError('email') &&
+            volunteerForm.get('email')?.touched
+          "
+          class="error"
+        >
+          Doğru email formatı daxil edin.
+        </div>
+      </div>
+
+      <div>
+        <label for="address">Ünvan</label>
+        <input id="address" formControlName="address" />
+        <div
+          *ngIf="
+            volunteerForm.get('address')?.hasError('required') &&
+            volunteerForm.get('address')?.touched
+          "
+          class="error"
+        >
+          Ünvan tələb olunur.
+        </div>
+      </div>
+
+      <div>
+        <label for="image">Şəkil</label>
+        <input
+          type="file"
+          id="image"
+          (change)="onFileSelect($event)"
+          accept=".jpg,.jpeg,.png"
+        />
+        <div
+          *ngIf="volunteerForm.get('imageUrl')?.hasError('invalidFileType')"
+          class="error"
+        >
+          Yalnız şəkil faylları qəbul olunur (JPEG, PNG, GIF, BMP).
+        </div>
+        <div
+          *ngIf="volunteerForm.get('imageUrl')?.hasError('fileTooLarge')"
+          class="error"
+        >
+          Fayl ölçüsü maksimum 2 MB ola bilər.
+        </div>
+      </div>
+
+      <button type="submit">
+        {{ currentVolunteerId ? "Redaktə Et" : "Əlavə Et" }}
+      </button>
+      <button type="button" (click)="toggleForm()">Geri Qayıt</button>
+    </form>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div class="confirmation-modal" *ngIf="showConfirmation">
+    <div class="modal-contentt">
+      <p>{{ confirmationMessage }}</p>
+      <button class="confirm-btn" (click)="onConfirm(true)">Bəli</button>
+      <button class="cancel-btn" (click)="onConfirm(false)">Xeyr</button>
+    </div>
+  </div>
+  <div class="pagination-controls" *ngIf="volunteers.length">
+    <button (click)="prevPage()" [disabled]="currentPage === 1">Əvvəlki</button>
+    <span>Səhifə {{ currentPage }} / {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+      Növbəti
+    </button>
+  </div>
+</div>
