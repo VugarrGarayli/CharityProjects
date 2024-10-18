@@ -15,8 +15,12 @@
         <h4>{{ proj.title }}</h4>
         <div [innerHTML]="getShortContent(proj.content, i)"></div>
         <div class="more-less-btn-container">
-          <button *ngIf="proj.content.length > 100" (click)="toggleContent(i)" class="more-less-btn">
-            {{ isExpanded[i] ? 'Daha az' : 'Daha çox' }}
+          <button
+            *ngIf="proj.content.length > 100"
+            (click)="toggleContent(i)"
+            class="more-less-btn"
+          >
+            {{ isExpanded[i] ? "Daha az" : "Daha çox" }}
           </button>
         </div>
         <button class="edit-btn" (click)="openEditForm(i)">Redaktə Et</button>
@@ -60,11 +64,9 @@
           <div class="form-group">
             <label for="image">Şəkil:</label>
             <input
-              id="image"
               type="file"
               (change)="onFileChange($event)"
-              formControlName="image"
-              accept=".jpg,.jpeg,.png"
+              accept="image/jpeg, image/png, image/jpg"
             />
             <div *ngIf="projectForm.get('image')?.errors">
               <small>Şəkil faylı seçilməlidir.</small>
@@ -107,10 +109,4 @@
       </div>
     </div>
   </div>
-  
-  
-
 </div>
-
-
-

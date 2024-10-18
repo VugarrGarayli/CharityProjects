@@ -28,7 +28,7 @@ import { AdminVolunteersComponent } from './admin/admin-volunteers/admin-volunte
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatDialogModule } from '@angular/material/dialog'; // MatDialog üçün lazımdır
 import { MatButtonModule } from '@angular/material/button'; // Dialog düymələri üçün lazımdır
-
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -63,6 +63,7 @@ import { MatButtonModule } from '@angular/material/button'; // Dialog düymələ
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [provideNgxMask(), provideAnimationsAsync()],
   bootstrap: [AppComponent],

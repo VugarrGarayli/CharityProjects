@@ -11,7 +11,8 @@ import "./chunk-NIYKUMYQ.js";
 import {
   BrowserModule,
   DomRendererFactory2
-} from "./chunk-5IRFZYNZ.js";
+} from "./chunk-CCXTMW2L.js";
+import "./chunk-VKEOEQJZ.js";
 import {
   DOCUMENT
 } from "./chunk-O4KVDBAI.js";

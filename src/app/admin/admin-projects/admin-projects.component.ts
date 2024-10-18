@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 interface Project {
   title: string;
@@ -27,7 +28,7 @@ export class AdminProjectsComponent {
   page = 1;
   pageSize = 5;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private http: HttpClient) { // HttpClient əlavə edildi
     this.projectForm = this.fb.group({
       title: [
         '',
@@ -44,7 +45,7 @@ export class AdminProjectsComponent {
   showConfirmationModal(message: string, callback: () => void) {
     this.confirmationMessage = message;
     this.showConfirmation = true;
-  
+
     this.confirmAction = (confirmed: boolean) => {
       if (confirmed) {
         callback();
@@ -57,9 +58,9 @@ export class AdminProjectsComponent {
     if (this.projectForm.invalid) {
       return;
     }
-
+  
     const updatedProject = this.projectForm.value;
-
+  
     if (this.editingIndex !== null) {
       this.showConfirmationModal('Dəyişikliklər yadda saxlanılsın?', () => {
         const globalIndex = (this.page - 1) * this.pageSize + this.editingIndex;
@@ -67,12 +68,28 @@ export class AdminProjectsComponent {
         this.editingIndex = null;
         this.projectForm.reset();
         this.closeForm();
+  
+    
+        this.http.put(`https://localhost:44366/api/Project/${globalIndex}`, updatedProject)
+          .subscribe(response => {
+            console.log('Project updated', response);
+          }, error => {
+            console.error('Error updating project', error);
+          });
       });
     } else {
       this.showConfirmationModal('Məlumatlar əlavə edilsin?', () => {
         this.projects.push(updatedProject);
         this.projectForm.reset();
         this.closeForm();
+  
+       
+        this.http.post('https://localhost:44366/api/Project', updatedProject)
+          .subscribe(response => {
+            console.log('Project added', response);
+          }, error => {
+            console.error('Error adding project', error);
+          });
       });
     }
   }
@@ -81,28 +98,40 @@ export class AdminProjectsComponent {
     this.showConfirmationModal('Silmək istədiyinizdən əminsiz?', () => {
       const globalIndex = (this.page - 1) * this.pageSize + index;
       this.projects.splice(globalIndex, 1);
+
       if (this.paginatedProjects.length === 0 && this.page > 1) {
         this.previousPage();
       }
+
+     
+      this.http.delete(`https://localhost:44366/api/Project/${globalIndex}`)
+        .subscribe(response => {
+          console.log('Project deleted', response);
+        });
     });
   }
 
   onFileChange(event: any) {
     const file = event.target.files[0];
-
-    if (file && ['image/jpeg', 'image/png', 'image/jpg'].includes(file.type)) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.projectForm.patchValue({ image: e.target.result });
-      };
-      reader.readAsDataURL(file);
-    } else {
-      alert(
-        'Yalnız şəkil formatlarında fayllar əlavə edilə bilər (.jpg, .png, .jpeg)'
-      );
-      this.projectForm.get('image')?.reset();
+  
+    if (file) {
+      
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+      if (allowedTypes.includes(file.type)) {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+         
+          this.projectForm.patchValue({ image: e.target.result });
+        };
+        reader.readAsDataURL(file);
+      } else {
+       
+        alert('Yalnız şəkil formatlarında fayllar əlavə edilə bilər (.jpg, .png, .jpeg)');
+        this.projectForm.get('image')?.reset(); 
+      }
     }
   }
+  
 
   confirmAction(confirmed: boolean) {}
 
@@ -136,14 +165,11 @@ export class AdminProjectsComponent {
     }
   }
 
-
-
-  getShortContent(content: string, index: number) { // Get shortened content or full content depending on visibility
+  getShortContent(content: string, index: number) {
     return this.isExpanded[index] ? content : content.slice(0, 100) + '...';
   }
 
-  
-  toggleContent(index: number) { // Toggle content visibility
+  toggleContent(index: number) {
     this.isExpanded[index] = !this.isExpanded[index];
   }
 
